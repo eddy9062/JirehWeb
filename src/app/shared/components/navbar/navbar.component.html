@@ -1,0 +1,48 @@
+<header class="bg-white border-b border-gray-200 w-full overflow-x-hidden">
+  <nav class="flex items-center justify-between bg-blue-300 text-white px-4 py-2 w-full">
+
+    <!-- Botón hamburguesa -->
+    <button (click)="toggleSidebar.emit()" type="button"
+      class="inline-flex items-center w-10 h-10 justify-center text-gray-100 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-200">
+      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd"
+          d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+        </path>
+      </svg>
+    </button>
+
+    <!-- Logo -->
+    <a routerLink="/" class="flex items-center">
+      <svg class="h-12 max-w-[120px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 603 182">
+        <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208z" />
+      </svg>
+    </a>
+
+    <!-- Íconos -->
+    <div class="flex items-center gap-2 shrink-0">
+      <!-- Buscar -->
+      <button aria-label="Buscar"
+        class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-blue-400 focus:ring-2 focus:ring-blue-200">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 512 512">
+          <path
+            d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208z" />
+        </svg>
+      </button>
+
+      <!-- Carrito -->
+      <a routerLink="/cart"
+        class="relative w-10 h-10 flex items-center justify-center rounded-lg hover:bg-blue-400 focus:ring-2 focus:ring-blue-200">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 576 512">
+          <path
+            d="M0 24C0 10.7 10.7 0 24 0L69.5 0c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3h-288.5l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24h-288.3c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zm128 440a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z" />
+        </svg>
+        <span *ngIf="totalItems > 0">{{ totalItems }}</span>
+                  <!-- Mostrar cantidad 
+          <span *ngIf="(cantidad$ | async) as cantidad" class="ml-1">{{ cantidad }}</span>
+          -->
+        
+      </a>
+    </div>
+
+  </nav>
+</header>
