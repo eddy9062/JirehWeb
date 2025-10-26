@@ -5,3 +5,5 @@
   22.18.0
 # Framework 
   flowbite
+  ## Build
+Run `ng build`
