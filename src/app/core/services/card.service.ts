@@ -13,6 +13,7 @@ export class CartService {
 
   cart$ = this.cartSubject.asObservable(); // observable para los componentes
 
+
   // 🔎 Detecta qué almacenamiento usar
   private get storage(): Storage | null {
     try {
@@ -59,6 +60,8 @@ export class CartService {
     // 👈 forzamos copia inmutable para evitar mutaciones silenciosas
     const cart = [...this.getCart()];
     const matched = cart.find((c) => c.product.id === product.id);
+
+    console.log(product)
 
     if (matched) {
       matched.quantity++;

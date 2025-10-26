@@ -1,207 +1,100 @@
 <main class="p-2">
-  
-<form class="flex items-center max-w-sm mx-auto">   
-    <label for="simple-search" class="sr-only">Search</label>
-    <div class="relative w-full">
-        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-           <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-  <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
-</svg>
-
-        </div>
-        <input type="text" id="simple-search" 
-          (input)="onSearch( $event )"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search branch name..." required />
-    </div>
-    <button type="submit" class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+    <!--
+    <form class="flex items-center max-w-sm mx-auto">
+        <div class="relative">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
         </svg>
-        <span class="sr-only">Search</span>
-    </button>
-    <div class="mb-4">
-  <input
-    type="text"
-    placeholder="Buscar producto..."
-    class="w-full p-2 border rounded"
-  />
-</div>
-</form>
 
-  <section class="grid place-content-center lg:grid-cols-2 gap-4 lg:py-32">
-    <article class="flex flex-col max-w-xl mx-auto gap-2">
-      <h1 class="text-gray-950 font-bold text-4xl sm:text-5xl lg:text-7xl">
-        Campra de varidad de Productos
-      </h1>
-      <p class="text-lg md:text-xl text-gray-500">
-        Compre Utiles Escolares, Productos de Cabello, Productos de Uñas, Productos de Belleza, Regalos, Accesorios y más.
-      </p>
-      <a
-        role="button"
-        [routerLink]="['products']"
-        class="text-gray-700 rounded-md border border-gray-500 px-4 py-2 w-fit focus:ring-4 focus:ring-gray-200"
-      >
+            </div>
+            <input type="search" name="search" id="default-search" placeholder="Buscar producto..." [(ngModel)]="searchTerm" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-400 rounded-lg bg-gray-40 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+        </div>
+    </form>
+  -->
+    <section *ngIf="!searchTerm" class="grid place-content-center lg:grid-cols-2 gap-4 lg:py-32">
+
+
+        <article class="flex flex-col max-w-xl mx-auto gap-2">
+            <h1 class="text-gray-950 font-bold text-4xl sm:text-5xl lg:text-7xl">
+                Campra de varidad de Productos
+            </h1>
+            <p class="text-lg md:text-xl text-gray-500">
+                Compre Utiles Escolares, Productos de Cabello, Productos de Uñas, Productos de Belleza, Regalos, Accesorios y más.
+            </p>
+            <a role="button" [routerLink]="['products']" class="text-gray-700 rounded-md border border-gray-500 px-4 py-2 w-fit focus:ring-4 focus:ring-gray-200">
         Ver Más
       </a>
-    </article>
+        </article>
 
-    @defer {
-    <article id="offers-carousel" class="mt-6 relative" data-carousel="slide">
-      -- Carousel wrapper -
-      <div class="relative h-56 sm:h-96 overflow-hidden">
-        @for (productOffer of productsOffers; track $index) { @if ($index == 0)
-        {
-        <div class="sm:mt-24 duration-700 ease-in-out" data-carousel-item="active">
-          <app-product-offer [product]="productOffer" />
-        </div>
+        @defer {
+        <article id="offers-carousel" class="mt-6 relative" data-carousel="slide">
+            <div class="relative h-56 sm:h-96 overflow-hidden">
+                @for (productOffer of productsOffers; track $index) { @if ($index == 0) {
+                <div class="sm:mt-24 duration-700 ease-in-out" data-carousel-item="active">
+                    <app-product-offer [product]="productOffer" />
+                </div>
 
-        }@else {
-        <div
-          class="sm:mt-24 hidden duration-700 ease-in-out"
-          data-carousel-item>
-          <app-product-offer [product]="productOffer" />
-        </div>
-        } }
-      </div>
-      -- Slider controls -
-      <button
-        type="button"
-        class="absolute top-0 start-0 z-30 flex items-center justify-center h-full sm:px-4 cursor-pointer group focus:outline-none"
-        data-carousel-prev
-      >
+                }@else {
+                <div class="sm:mt-24 hidden duration-700 ease-in-out" data-carousel-item>
+                    <app-product-offer [product]="productOffer" />
+                </div>
+                } }
+            </div>
+            <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full sm:px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
         <span
-          class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-500 group-hover:bg-gray-400 group-focus:ring-4 group-focus:ring-gray-300 group-focus:outline-none"
-        >
-          <svg
-            class="w-4 h-4 text-white rtl:rotate-180"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 6 10"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M5 1 1 5l4 4"
-            />
+          class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-500 group-hover:bg-gray-400 group-focus:ring-4 group-focus:ring-gray-300 group-focus:outline-none">
+          <svg class="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 6 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M5 1 1 5l4 4" />
           </svg>
           <span class="sr-only">Previous</span>
         </span>
       </button>
-      <button
-        type="button"
-        class="absolute top-0 end-0 z-30 flex items-center justify-center h-full sm:px-4 cursor-pointer group focus:outline-none"
-        data-carousel-next
-      >
+            <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full sm:px-4 cursor-pointer group focus:outline-none" data-carousel-next>
         <span
-          class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-500 group-hover:bg-gray-400 group-focus:ring-4 group-focus:ring-gray-300 group-focus:outline-none"
-        >
-          <svg
-            class="w-4 h-4 text-white rtl:rotate-180"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 6 10"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="m1 9 4-4-4-4"
-            />
+          class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-500 group-hover:bg-gray-400 group-focus:ring-4 group-focus:ring-gray-300 group-focus:outline-none">
+          <svg class="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 6 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 9 4-4-4-4" />
           </svg>
           <span class="sr-only">Next</span>
         </span>
       </button>
-    </article>
-    
-    } @placeholder (minimum 200ms) {
-    <div class="flex justify-center items-center">
-      <div
-        role="status"
-        class="flex-1 flex items-center justify-center h-56 max-w-sm bg-gray-300 rounded-lg animate-pulse w-full"
-      >
-        <svg
-          class="w-10 h-10 text-gray-200"
-          fill="currentColor"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 512 512"
-        >
+        </article>
+
+        } @placeholder (minimum 200ms) {
+        <div class="flex justify-center items-center">
+            <div role="status" class="flex-1 flex items-center justify-center h-56 max-w-sm bg-gray-300 rounded-lg animate-pulse w-full">
+                <svg class="w-10 h-10 text-gray-200" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
           <path
-            d="M0 96C0 60.7 28.7 32 64 32l384 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM323.8 202.5c-4.5-6.6-11.9-10.5-19.8-10.5s-15.4 3.9-19.8 10.5l-87 127.6L170.7 297c-4.6-5.7-11.5-9-18.7-9s-14.2 3.3-18.7 9l-64 80c-5.8 7.2-6.9 17.1-2.9 25.4s12.4 13.6 21.6 13.6l96 0 32 0 208 0c8.9 0 17.1-4.9 21.2-12.8s3.6-17.4-1.4-24.7l-120-176zM112 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"
-          />
+            d="M0 96C0 60.7 28.7 32 64 32l384 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM323.8 202.5c-4.5-6.6-11.9-10.5-19.8-10.5s-15.4 3.9-19.8 10.5l-87 127.6L170.7 297c-4.6-5.7-11.5-9-18.7-9s-14.2 3.3-18.7 9l-64 80c-5.8 7.2-6.9 17.1-2.9 25.4s12.4 13.6 21.6 13.6l96 0 32 0 208 0c8.9 0 17.1-4.9 21.2-12.8s3.6-17.4-1.4-24.7l-120-176zM112 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z" />
         </svg>
-        <span class="sr-only">Loading...</span>
-      </div>
-    </div>
-    }
-  </section>
-<!--
-  <section class="mt-4 max-w-screen-lg mx-auto">
-    <h2 class="font-bold text-2xl sm:text-3xl text-center lg:text-4xl">
-      Elige tu producto favorito
-    </h2>
-    
-    <article
-      class="mt-8 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center"
-    >
-    
-<cdk-virtual-scroll-viewport itemSize="100" class="h-[500px] w-full border rounded overflow-auto">
-  <ng-container *cdkVirtualFor="let product of productsOffers; let i = index">
-    <ng-container *ngIf="product; else loading">
-      <app-home-product [product]="product"></app-home-product>
-    </ng-container>
-    <ng-template #loading>
-      <app-home-product-loading></app-home-product-loading>
-    </ng-template>
-  </ng-container>
-</cdk-virtual-scroll-viewport>
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        }
+    </section>
 
-      @defer { @for (product of products; track $index) {
-      <app-home-product [product]="product" />
-      } } @placeholder (minimum 200ms) {
-      <app-home-product-loading />
-      <app-home-product-loading />
-      <app-home-product-loading />
-      <app-home-product-loading />
-      }
+    <section class="mt-2 max-w-screen-lg mx-auto">
+        <h2 class="font-bold text-2xl sm:text-3xl text-center lg:text-4xl">
+            Elige tu producto favorito
+        </h2>
+        <article class="mt-8 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 justify-center">
+            @for (product of visibleProducts | filtro:searchTerm:['name','descripcion']; track $index) {
+            <app-home-product [product]="product" /> }
+        </article>
 
-    </article>
-
-    <article class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-  <app-home-product *ngFor="let product of visibleProducts" [product]="product" />
-</article>
-
- Sentinel para cargar más 
-<div #loadMore class="h-10"></div>
-
-  </section>
-      -->
-    <section class="mt-4 max-w-screen-lg mx-auto">
-  <h2 class="font-bold text-2xl sm:text-3xl text-center lg:text-4xl">
-    Elige tu producto favorito
-  </h2>
-  <article
-    class="mt-8 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center"
-  >
-    @for (product of visibleProducts | filtro:searchTerm:'name'; track $index) {
-      <app-home-product [product]="product" />
-    }
-  </article>
-
-  <!-- loader -->
-  <div
-  #loadMore
-  class="flex justify-center items-center mt-6"
-  *ngIf="visibleProducts.length < products.length"
->
-  <div class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-  <span class="ml-2 text-gray-600">Cargando más productos...</span>
-</div>
-</section>
+        <!-- loader -->
+        <div #loadMore class="flex justify-center items-center mt-6" *ngIf="visibleProducts.length < products.length">
+            <div class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            <span class="ml-2 text-gray-600">Cargando más productos...</span>
+        </div>
+    </section>
 
 
 </main>

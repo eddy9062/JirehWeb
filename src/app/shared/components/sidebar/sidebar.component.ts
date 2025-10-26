@@ -4,7 +4,7 @@ import { NavbarComponent } from "../navbar/navbar.component";
 
 @Component({
   selector: 'app-sidebar',
-  imports: [NgClass, NavbarComponent], // 👈 importante
+  imports: [NgClass], // 👈 importante
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })

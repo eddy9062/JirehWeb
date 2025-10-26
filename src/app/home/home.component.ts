@@ -1,17 +1,20 @@
 import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
-import { initFlowbite } from 'flowbite';
+import {  initDropdowns, initModals } from 'flowbite';
 import { ProductOfferComponent } from '../shared/components/product-offer/product-offer.component';
 import { Product } from '../shared/models/product';
 import { ProductsService } from '../core/services/product.service';
 import { HomeProductComponent } from './components/home-product/home-product.component';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; // 👈 IMPORTANTE
 import { FiltroPipe } from "../shared/components/pipes/filtro.pipe";
+import { Subscription } from 'rxjs';
+import { SearchService } from '../core/services/search.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, ProductOfferComponent, HomeProductComponent, RouterLink, FiltroPipe],
+  imports: [CommonModule, FormsModule, ProductOfferComponent, HomeProductComponent, RouterLink, FiltroPipe],
   templateUrl: './home.component.html',
 })
 
@@ -30,7 +33,10 @@ export class HomeComponent implements OnInit {
 
   @ViewChild('loadMore', { static: false }) loadMore!: ElementRef;
 
-  searchTerm = '';
+  searchTerm: string = '';
+  private searchSub!: Subscription;
+
+constructor(private searchService: SearchService) {}
 
   ngOnInit(): void {
     this.productsService.getAll().subscribe((products) => {
@@ -38,20 +44,38 @@ export class HomeComponent implements OnInit {
       this.filteredProducts = [...this.products];
       this.productsOffers = this.products;
 
+      console.log(this.products)
       // inicializar con 20
       this.visibleProducts = this.products.slice(0, this.PAGE_SIZE);
 
         // 👇 inicializa el observer aquí, no en ngAfterViewInit
     setTimeout(() => {
-      if (this.loadMore) {
-        this.initObserver();
-      }
-      initFlowbite();
-    }, 200);
+  if (this.loadMore) {
+    this.initObserver();
+  }
+  this.initFlowbiteComponents();
+}, 200);
+
+    });
+
+    this.searchSub = this.searchService.searchTerm$.subscribe(term => {
+      this.searchTerm = term;
     });
   }
 
-  ngAfterViewInit() { }
+  ngOnDestroy() {
+    this.searchSub.unsubscribe();
+  }
+
+private initFlowbiteComponents() {
+  try {
+    // Inicializa solo lo necesario
+    initDropdowns();
+    initModals();
+  } catch (err) {
+    console.warn('Error al inicializar Flowbite:', err);
+  }
+}
 
 private resetVisible() {
     this.visibleProducts = this.filteredProducts.slice(0, this.PAGE_SIZE);
@@ -80,25 +104,8 @@ private resetVisible() {
     }
 }
 
-
 trackById(index: number, item: Product) {
   return item.id ?? index;
 }
-
-onSearch(event: any) {
-  console.log(event.data)
-
-  this.searchTerm = event.data;
-  /*
-    this.searchTerm = event.data.toLowerCase();
-
-    this.filteredProducts = this.products.filter((p) =>
-      p.name.toLowerCase().includes(this.searchTerm) ||
-      p.description?.toLowerCase().includes(this.searchTerm)
-    );
-
-    this.resetVisible();
-    */
-  }
 
 }

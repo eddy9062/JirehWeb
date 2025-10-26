@@ -24,7 +24,7 @@ export class PaymentSuccessComponent implements OnInit {
     });
 
     const total = cartProducts.reduce((acc, current) => {
-      return acc + current.product.precio * current.quantity;
+      return acc + current.product.precio_venta * current.quantity;
     }, 0);
 
     localStorage.removeItem('cart-products');

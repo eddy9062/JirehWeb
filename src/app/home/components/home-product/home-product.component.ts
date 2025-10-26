@@ -17,6 +17,6 @@ export class HomeProductComponent {
 
   addToCart() {
     this.cartService.addProduct(this.product());
-    //console.log('Carrito actualizado:', this.cartService.getCart());
+    console.log('Carrito actualizado:', this.cartService.getCart());
   }
 }

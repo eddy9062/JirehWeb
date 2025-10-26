@@ -15,7 +15,7 @@ export class ProductOfferComponent implements OnInit {
 
   ngOnInit(): void {
     const previousPrice = this.product().previousPrice;
-    const currentPrice = this.product().precio;
+    const currentPrice = this.product().precio_venta;
 
     //console.log(this.product)
 
