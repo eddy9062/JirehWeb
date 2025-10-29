@@ -6,7 +6,7 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Ajusta el nombre de la carpeta real que te genera el build
 # EJEMPLO: dist/jireh-web/browser/
-COPY ./dist/JirehWeb/browser/ /usr/share/nginx/html/
+COPY ./dist/JirehWeb/frontend/browser/ /usr/share/nginx/html/
 
 EXPOSE 80
 
