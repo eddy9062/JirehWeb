@@ -7,3 +7,4 @@
   flowbite
   ## Build
 Run `ng build`
+ng build --configuration=production --base-href /web_jireh/
