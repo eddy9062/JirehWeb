@@ -131,7 +131,7 @@ export class CartComponent {
 
   async processItems(items: MovModel) {
     this._lstData.push({
-      parametro: `N${0}N${items.cod_cliente}`,
+      parametro: `N0N${items.cod_cliente}`,
       detalle: items.det.map((det) => ({
         parametro: `N${0}|V${det.cod_articulo}|N${det.cod_det_articulo}|N${det.cantidad}|N${det.precio_venta}`,
       })),
