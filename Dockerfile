@@ -1,18 +1,12 @@
-FROM node:18.15 AS build
+# Solo “serve” (sin etapa de build)
+FROM nginx:1.27-alpine
 
-WORKDIR /usr/local/app
+# Conf SPA
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Compilacion en servidor
-#COPY ./ /usr/local/app/
-#RUN npm install -g @ionic/cli@7.1.1
-#RUN npm install
-#RUN ionic build --prod  
-
-# Compilacion Externa
-COPY ./dist /usr/local/app/www/
-
-FROM nginx:1.23.2-alpine
-
-COPY --from=build /usr/local/app/www/ /usr/share/nginx/html
+# Ajusta el nombre de la carpeta real que te genera el build
+# EJEMPLO: dist/jireh-web/browser/
+COPY ./dist/jirehweb/browser/ /usr/share/nginx/html/
 
 EXPOSE 80
+
