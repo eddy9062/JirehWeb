@@ -22,8 +22,8 @@ export class VentaService {
       codigoSQL: 43,
       encabezado: data,
     };
-    console.log(paramData)
-    console.log(token)
+    //console.log(paramData)
+    //console.log(token)
 
     let headers = new HttpHeaders()
       .set('Content-Type', 'application/json')

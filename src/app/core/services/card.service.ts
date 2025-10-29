@@ -13,7 +13,6 @@ export class CartService {
 
   cart$ = this.cartSubject.asObservable(); // observable para los componentes
 
-
   // 🔎 Detecta qué almacenamiento usar
   private get storage(): Storage | null {
     try {
@@ -61,7 +60,7 @@ export class CartService {
     const cart = [...this.getCart()];
     const matched = cart.find((c) => c.product.id === product.id);
 
-    console.log(product)
+    console.log(product);
 
     if (matched) {
       matched.quantity++;
@@ -85,7 +84,7 @@ export class CartService {
     return this.getCart().reduce((sum, c) => sum + c.quantity, 0);
   }
 
-decrementQuantity(productId: string): void {
+  decrementQuantity(productId: string): void {
     const cart = this.getCart();
     const matched = cart.find((c) => c.product.id === productId);
 
@@ -112,5 +111,13 @@ decrementQuantity(productId: string): void {
     }
   }
 
-
+  clear(): void {
+  if (this.storage) {
+    this.storage.removeItem(this.storageKey); // 🔥 elimina la clave
+  } else {
+    this.memoryFallback = [];
+  }
+  this.cartSubject.next([]); // sincroniza la UI
+}
+  
 }

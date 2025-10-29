@@ -46,7 +46,8 @@ export class CartComponent {
 
   constructor(
     private authService: AuthService,
-    private ventaService: VentaService
+    private ventaService: VentaService,
+    private alertService: AlertService
   ) {
     this.isAuthenticated = authService.isAuthenticated();
   }
@@ -86,7 +87,8 @@ export class CartComponent {
   async onComprar() {
     if (this.isAuthenticated) {
       
-      console.log('✅ Usuario autenticado');
+      console.log('✅ Usuario autenticado ');
+      console.log(this._lstData)
       const movimiento = await this.getMovimientoFromStorage(); // 👈 recibe el objeto
       if (!movimiento) {
       console.warn('⚠️ No se pudo construir el movimiento');
@@ -131,7 +133,7 @@ export class CartComponent {
 
   async processItems(items: MovModel) {
     this._lstData.push({
-      parametro: `N0N${items.cod_cliente}`,
+      parametro: `N0|N${items.cod_cliente}`,
       detalle: items.det.map((det) => ({
         parametro: `N${0}|V${det.cod_articulo}|N${det.cod_det_articulo}|N${det.cantidad}|N${det.precio_venta}`,
       })),
@@ -145,7 +147,10 @@ async enviarVenta(data: any) {
         //console.log(response);
         //console.log(Number(response.codigo));
         if ((response.message = 'Ok')) {
-          console.log(response)
+          //console.log(response)
+          this.cartService.clear()
+          this._lstData= [];
+          this.alertService.success('# Cotización: '+response.codigo)
         }
       },
       error: (err) => {

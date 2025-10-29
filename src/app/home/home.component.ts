@@ -44,7 +44,7 @@ constructor(private searchService: SearchService) {}
       this.filteredProducts = [...this.products];
       this.productsOffers = this.products;
 
-      console.log(this.products)
+      //console.log(this.products)
       // inicializar con 20
       this.visibleProducts = this.products.slice(0, this.PAGE_SIZE);
 
