@@ -47,7 +47,7 @@ export class NavbarComponent implements OnInit {
 
   user$: Observable<Cliente | null> = this.authService.user$;
   showAuthModal = false;
-  activeTab = '';
+  activeTab = 'login';
 
 //cliente: Cliente = this.getEmptyCliente();
 //activeTab: 'login' | 'register' = 'login';

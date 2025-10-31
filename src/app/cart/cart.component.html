@@ -123,13 +123,14 @@
                         <p class="mt-2 text-center text-gray-800 font-semibold">
                             Total: {{ cartProduct.product.precio_venta * cartProduct.quantity | currency:'GTQ':'symbol':'1.2-2':'es-GT' }}
                         </p>
+                        <!--
                         <div class="mt-5">
 
                             <button (click)="onComprar()" class="w-full rounded-lg bg-yellow-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-200">
                                 Comprar-11
                             </button>
                         </div>
-
+-->
                     </div>
                     }
                 </div>
@@ -163,7 +164,7 @@
                     </div>
                 </div>
 
-                <!-- 🎟️ Voucher -->
+                <!-- 🎟️ Voucher 
                 <div class="rounded-lg border border-gray-200 bg-white p-5 shadow-sm">
                     <form class="space-y-4">
                         <label for="voucher" class="block text-sm font-medium text-gray-700">
@@ -175,6 +176,7 @@
                         </button>
                     </form>
                 </div>
+                -->
                 <div class="mt-5">
                     <button *ngIf="this.cartService.getCart().length > 0" (click)="onComprar()" class="w-full rounded-lg bg-yellow-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-200">
                         Comprar

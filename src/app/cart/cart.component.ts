@@ -17,6 +17,7 @@ import { AuthService } from '../core/services/auth.service';
 import { VentaService } from '../core/services/venta.service';
 import { MovModel } from '../shared/models/MovModel';
 import { DetProductModel } from '../shared/models/DetProductModel';
+import { ModalService } from '../core/services/modal.service';
 
 @Component({
   selector: 'app-cart',
@@ -47,7 +48,8 @@ export class CartComponent {
   constructor(
     private authService: AuthService,
     private ventaService: VentaService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private modalService: ModalService
   ) {
     this.isAuthenticated = authService.isAuthenticated();
   }
@@ -71,10 +73,10 @@ export class CartComponent {
   increment(productId: string) {
     this.cartService.incrementQuantity(productId);
   }
-
+/*
   openLogin() {
     this.showAuthModal = true;
-  }
+  }*/
 
   closeModal() {
     this.showAuthModal = false;
@@ -86,19 +88,20 @@ export class CartComponent {
 
   async onComprar() {
     if (this.isAuthenticated) {
-      
-      console.log('✅ Usuario autenticado ');
-      console.log(this._lstData)
+      //console.log('✅ Usuario autenticado ');
+      //console.log(this._lstData)
       const movimiento = await this.getMovimientoFromStorage(); // 👈 recibe el objeto
       if (!movimiento) {
-      console.warn('⚠️ No se pudo construir el movimiento');
-      return;
-    }
+        console.warn('⚠️ No se pudo construir el movimiento');
+        return;
+      }
       await this.processItems(movimiento);
       await this.enviarVenta(this._lstData);
       //await this.processItems(this.itemCard);
     } else {
-      console.log('no autenticado');
+      this.alertService.info('debe de iniciar seción o crear usuario...');
+     // this.openLogin()
+     this.modalService.openAuth();
     }
   }
 
@@ -124,7 +127,7 @@ export class CartComponent {
         cod_cliente: user.cod_cliente,
         det: productos,
       };
-     return movimiento; // ✅ retorna siempre un objeto MovModel 
+      return movimiento; // ✅ retorna siempre un objeto MovModel
     } catch (error) {
       console.error('Error al obtener movimiento desde localStorage:', error);
       return null; // ✅ garantiza retorno
@@ -135,12 +138,14 @@ export class CartComponent {
     this._lstData.push({
       parametro: `N0|N${items.cod_cliente}`,
       detalle: items.det.map((det) => ({
-        parametro: `N${0}|V${det.cod_articulo}|N${det.cod_det_articulo}|N${det.cantidad}|N${det.precio_venta}`,
+        parametro: `N${0}|V${det.cod_articulo}|N${det.cod_det_articulo}|N${
+          det.cantidad
+        }|N${det.precio_venta}`,
       })),
     });
   }
 
-async enviarVenta(data: any) {
+  async enviarVenta(data: any) {
     //console.log(data);
     this.ventaService.registraMovimiento(data).subscribe({
       next: (response) => {
@@ -148,9 +153,9 @@ async enviarVenta(data: any) {
         //console.log(Number(response.codigo));
         if ((response.message = 'Ok')) {
           //console.log(response)
-          this.cartService.clear()
-          this._lstData= [];
-          this.alertService.success('# Cotización: '+response.codigo)
+          this.cartService.clear();
+          this._lstData = [];
+          this.alertService.success('# Cotización: ' + response.codigo);
         }
       },
       error: (err) => {
@@ -158,6 +163,4 @@ async enviarVenta(data: any) {
       },
     });
   }
-
-
 }
