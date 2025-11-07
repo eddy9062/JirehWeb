@@ -86,54 +86,43 @@
 
                 <!-- 📱 Cards (mismo estilo que Home) -->
                 <!-- 📱 Cards (mismo estilo que Home + contador) -->
-                <div class="space-y-6 md:hidden mt-4">
+                <!-- 📱 Cards (mismo estilo que Home + contador) -->
+                <div class="md:hidden mt-4 grid grid-cols-2 gap-4">
                     @for (cartProduct of (cartProducts$ | async); track cartProduct.product.id) {
-                    <div class="relative bg-white p-4 rounded-xl shadow-md border border-gray-100">
+                    <div class="relative bg-white p-2 rounded-xl shadow-md border border-gray-100 flex flex-col h-full">
+                        <!-- tarjeta del home -->
+                        <app-home-product [product]="cartProduct.product"></app-home-product>
 
-                        <!-- 🔹 Card del home -->
-                        <div class="relative">
-                            <!-- 🔸 Reutiliza el componente -->
-                            <app-home-product [product]="cartProduct.product"></app-home-product>
-
-                            <!-- 🔸 Contador de cantidad (badge superior derecho) -->
-                            <div class="absolute top-2 right-2 bg-yellow-400 text-white text-xs font-semibold px-2 py-1 rounded-full shadow-md">
-                                ×{{ cartProduct.quantity }}
-                            </div>
+                        <!-- badge de cantidad -->
+                        <div class="absolute top-2 right-2 bg-yellow-400 text-white text-xs font-semibold px-2 py-1 rounded-full shadow-md">
+                            ×{{ cartProduct.quantity }}
                         </div>
 
-                        <!-- 🔸 Controles de cantidad -->
+                        <!-- controles de cantidad -->
                         <div class="flex items-center justify-center gap-3 mt-3">
                             <button (click)="decrement(cartProduct.product.id)" class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 active:scale-95 transition-transform">
-                                <svg class="h-3.5 w-3.5 text-gray-800" fill="none" viewBox="0 0 18 2">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M1 1h16" />
-                                </svg>
-                            </button>
+          <svg class="h-3.5 w-3.5 text-gray-800" fill="none" viewBox="0 0 18 2">
+            <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M1 1h16" />
+          </svg>
+        </button>
 
                             <input type="text" [value]="cartProduct.quantity" readonly class="h-8 w-12 text-center border border-gray-300 rounded-md bg-gray-50 text-gray-900 text-sm" />
 
                             <button (click)="increment(cartProduct.product.id)" class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 active:scale-95 transition-transform">
-                                <svg class="h-3.5 w-3.5 text-gray-800" fill="none" viewBox="0 0 18 18">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
-                                        d="M9 1v16M1 9h16" />
-                                </svg>
-                            </button>
+          <svg class="h-3.5 w-3.5 text-gray-800" fill="none" viewBox="0 0 18 18">
+            <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M9 1v16M1 9h16" />
+          </svg>
+        </button>
                         </div>
 
-                        <!-- 🔸 Total del producto -->
-                        <p class="mt-2 text-center text-gray-800 font-semibold">
-                            Total: {{ cartProduct.product.precio_venta * cartProduct.quantity | currency:'GTQ':'symbol':'1.2-2':'es-GT' }}
+                        <!-- total -->
+                        <p class="mt-2 text-center text-gray-800 font-semibold mb-1">
+                            Total: {{ cartProduct.product.precio_venta * cartProduct.quantity | currency: 'GTQ':'symbol':'1.2-2':'es-GT' }}
                         </p>
-                        <!--
-                        <div class="mt-5">
-
-                            <button (click)="onComprar()" class="w-full rounded-lg bg-yellow-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-200">
-                                Comprar-11
-                            </button>
-                        </div>
--->
                     </div>
                     }
                 </div>
+
 
 
                 } } @placeholder (minimum 200ms) {

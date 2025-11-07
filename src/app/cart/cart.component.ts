@@ -52,6 +52,7 @@ export class CartComponent {
     private modalService: ModalService
   ) {
     this.isAuthenticated = authService.isAuthenticated();
+    //console.log(this.cartProducts$)
   }
 
   // observable del total

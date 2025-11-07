@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, input, OnInit, ViewChild } from '@angular/core';
 import {  initDropdowns, initModals } from 'flowbite';
 import { ProductOfferComponent } from '../shared/components/product-offer/product-offer.component';
 import { Product } from '../shared/models/product';
@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
   productsService = inject(ProductsService);
 
   products: Product[] = [];
+  
   filteredProducts: Product[] = [];   // filtrados por search
   productsOffers: Product[] = [];
   visibleProducts: Product[] = [];

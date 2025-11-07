@@ -13,6 +13,7 @@ import { CartService } from '../../../core/services/card.service';
 })
 export class HomeProductComponent {
   product = input.required<Product>();
+  isPriority = input(false); // 👈 nuevo
   cartService = inject(CartService);
 
   addToCart() {

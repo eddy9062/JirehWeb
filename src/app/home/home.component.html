@@ -19,7 +19,7 @@
 
         <article class="flex flex-col max-w-xl mx-auto gap-2">
             <h1 class="text-gray-950 font-bold text-4xl sm:text-5xl lg:text-7xl">
-                Campra de varidad de Productos
+                Varidad de Productos
             </h1>
             <p class="text-lg md:text-xl text-gray-500">
                 Compre Utiles Escolares, Productos de Cabello, Productos de Uñas, Productos de Belleza, Regalos, Accesorios y más.
@@ -80,25 +80,22 @@
         }
     </section>
 
-    <section class="mt-2 max-w-screen-lg mx-auto">
-        <h2 class="font-bold text-2xl sm:text-3xl text-center lg:text-4xl">
+    <section class="mt-4 max-w-screen-xl mx-auto">
+        <h2 class="font-bold text-2xl sm:text-3xl text-center mb-4">
             Elige tu producto favorito
         </h2>
-        <!--
-        <article class="mt-2 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 justify-center">
-            
-            -->
-        <article class="mt-2 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 justify-center">
+
+        <article class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 px-2 sm:px-0">
             @for (product of visibleProducts | filtro:searchTerm:['name','descripcion']; track $index) {
-            <app-home-product [product]="product" /> }
+            <app-home-product [product]="product" [isPriority]="$index === 0" /> }
         </article>
 
-        <!-- loader -->
         <div #loadMore class="flex justify-center items-center mt-6" *ngIf="visibleProducts.length < products.length">
             <div class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-            <span class="ml-2 text-gray-600">Cargando más productos...</span>
+            <span class="ml-2 text-gray-600 text-sm">Cargando más productos...</span>
         </div>
     </section>
+
 
 
 </main>
