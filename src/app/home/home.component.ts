@@ -63,7 +63,11 @@ export class HomeComponent implements OnInit {
     this.productsService.getAll().subscribe((products) => {
       this.products = products;
       this.filteredProducts = [...this.products];
-      this.productsOffers = this.products;
+      //console.log(this.products)
+      //  this.productsOffers = this.products;
+      this.productsOffers = [...this.products].filter(
+        (p) => p.urlImg && p.urlImg.trim() !== ''
+      );
 
       /*console.log(this.products);
       console.log(this.visibleProducts);
@@ -86,18 +90,22 @@ export class HomeComponent implements OnInit {
   }
 
   private createObserver() {
-  this.observer?.disconnect();
+    this.observer?.disconnect();
 
-  this.observer = new IntersectionObserver((entries) => {
-    const entry = entries[0];
-    if (!entry?.isIntersecting) return;
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry?.isIntersecting) return;
 
-    if (this.visibleFilteredProducts.length >= this.filterProducts.length) return;
+        if (this.visibleFilteredProducts.length >= this.filterProducts.length)
+          return;
 
-    this.visibleCount += this.pageSize;
-    this.reobserve(); // importante: seguir observando el sentinel
-  }, { root: null, threshold: 0.1 });
-}
+        this.visibleCount += this.pageSize;
+        this.reobserve(); // importante: seguir observando el sentinel
+      },
+      { root: null, threshold: 0.1 }
+    );
+  }
 
   private reobserve() {
     // espera a que Angular pinte el #loadMore cuando el *ngIf sea true
