@@ -3,7 +3,7 @@
     <div class="relative w-full aspect-square bg-gray-50">
         @if (product().urlImg) {
         <img [ngSrc]="product().urlImg + '-thumb.jpg'" alt="Imagen del producto" fill [priority]="isPriority()" class="object-contain object-center" /> } @else {
-        <img ngSrc="img/default-main.jpg" alt="Imagen del producto" fill [priority]="isPriority()" class="object-contain object-center" /> }
+        <img ngSrc="./img/default-main.jpg" alt="Imagen del producto" fill [priority]="isPriority()" class="object-contain object-center" /> }
     </div>
 
     <!-- Contenido -->
