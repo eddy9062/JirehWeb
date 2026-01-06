@@ -9,7 +9,7 @@ import {
 import { Router, NavigationEnd, RouterLink } from '@angular/router';
 import { CarritoService } from '../../../core/services/carrito.service';
 import { CartService } from '../../../core/services/card.service';
-import { CommonModule, CurrencyPipe, NgClass } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SearchService } from '../../../core/services/search.service';
 import { AutoFocusDirective } from '../../directivas/auto-focus.directive';
@@ -119,13 +119,16 @@ export class NavbarComponent implements OnInit {
     this.showMenu = false;
   }
 
-  onSearchChange() {
+  onSearchChange(value: string) {
+    this.searchTerm = value;
     this.searchService.setSearchTerm(this.searchTerm);
   }
 
   toggleSearch() {
     this.showSearch = !this.showSearch;
     if (!this.showSearch) {
+      this.searchTerm = '';
+      this.searchService.clear();
       // Si se cierra el buscador, limpiar el término
       this.closeSearch();
     }

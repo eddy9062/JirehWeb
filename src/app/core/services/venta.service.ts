@@ -22,7 +22,7 @@ export class VentaService {
       codigoSQL: 43,
       encabezado: data,
     };
-    //console.log(paramData)
+    console.log(paramData)
     //console.log(token)
 
     let headers = new HttpHeaders()
@@ -31,6 +31,29 @@ export class VentaService {
     return this._http.post(this.url + 'getapiMulti_cli', paramData, {
       headers: headers,
     });
+  }
+
+  getMovimiento(pId: number): Observable<any> {
+    const token = this.authService.getToken(); // 👈 obtener token
+    const paramData = {
+      codigoSQL: 44,
+      parametro: `N${pId}|N${pId}|N${pId}`
+    };
+    console.log(paramData)
+    //encabezado: [{'parametro': `N${pId}`, 'detalle': [{'parametro': `N${pId}`}]}]
+    //console.log(token)
+//parametro: `N${pId}`
+//.set('Authorization', `Bearer ${token}`);
+    let headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`);
+      
+    return this._http.post(this.url + 'getapi_cli', paramData, {
+      headers: headers,
+    });
+    /*return this.http.post<Product[]>(this.baseUrl + 'getapist', paramData, {
+          headers: headers,
+        });*/
   }
 
   public convertirFecha(fechaISO: string): string {

@@ -9,4 +9,13 @@ export class SearchService {
   setSearchTerm(term: string) {
     this.searchTermSubject.next(term);
   }
+
+  clear() {
+    this.searchTermSubject.next('');
+  }
+
+  get value() {
+    return this.searchTermSubject.value;
+  }
+
 }

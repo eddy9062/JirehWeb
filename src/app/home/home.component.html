@@ -14,7 +14,7 @@
         </div>
     </form>
   -->
-    <section *ngIf="!searchTerm" class="grid place-content-center lg:grid-cols-2 gap-4 lg:py-32">
+    <section *ngIf="!searchTerm" class="grid place-content-center lg:grid-cols-2 gap-4 lg:py-2">
 
 
         <article class="flex flex-col max-w-xl mx-auto gap-2">
@@ -25,8 +25,8 @@
                 Compre Utiles Escolares, Productos de Cabello, Productos de Uñas, Productos de Belleza, Regalos, Accesorios y más.
             </p>
             <a role="button" [routerLink]="['products']" class="text-gray-700 rounded-md border border-gray-500 px-4 py-2 w-fit focus:ring-4 focus:ring-gray-200">
-        Ver Más
-      </a>
+                Ver Más
+            </a>
         </article>
 
         @defer {
@@ -44,56 +44,59 @@
                 } }
             </div>
             <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full sm:px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-        <span
-          class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-500 group-hover:bg-gray-400 group-focus:ring-4 group-focus:ring-gray-300 group-focus:outline-none">
-          <svg class="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-            fill="none" viewBox="0 0 6 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M5 1 1 5l4 4" />
-          </svg>
-          <span class="sr-only">Previous</span>
-        </span>
-      </button>
+                <span
+                    class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-500 group-hover:bg-gray-400 group-focus:ring-4 group-focus:ring-gray-300 group-focus:outline-none">
+                    <svg class="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 6 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5 1 1 5l4 4" />
+                    </svg>
+                    <span class="sr-only">Previous</span>
+                </span>
+            </button>
             <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full sm:px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-        <span
-          class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-500 group-hover:bg-gray-400 group-focus:ring-4 group-focus:ring-gray-300 group-focus:outline-none">
-          <svg class="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-            fill="none" viewBox="0 0 6 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="m1 9 4-4-4-4" />
-          </svg>
-          <span class="sr-only">Next</span>
-        </span>
-      </button>
+                <span
+                    class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-500 group-hover:bg-gray-400 group-focus:ring-4 group-focus:ring-gray-300 group-focus:outline-none">
+                    <svg class="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 6 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 9 4-4-4-4" />
+                    </svg>
+                    <span class="sr-only">Next</span>
+                </span>
+            </button>
         </article>
 
         } @placeholder (minimum 200ms) {
         <div class="flex justify-center items-center">
             <div role="status" class="flex-1 flex items-center justify-center h-56 max-w-sm bg-gray-300 rounded-lg animate-pulse w-full">
                 <svg class="w-10 h-10 text-gray-200" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-          <path
-            d="M0 96C0 60.7 28.7 32 64 32l384 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM323.8 202.5c-4.5-6.6-11.9-10.5-19.8-10.5s-15.4 3.9-19.8 10.5l-87 127.6L170.7 297c-4.6-5.7-11.5-9-18.7-9s-14.2 3.3-18.7 9l-64 80c-5.8 7.2-6.9 17.1-2.9 25.4s12.4 13.6 21.6 13.6l96 0 32 0 208 0c8.9 0 17.1-4.9 21.2-12.8s3.6-17.4-1.4-24.7l-120-176zM112 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z" />
-        </svg>
+                    <path
+                        d="M0 96C0 60.7 28.7 32 64 32l384 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM323.8 202.5c-4.5-6.6-11.9-10.5-19.8-10.5s-15.4 3.9-19.8 10.5l-87 127.6L170.7 297c-4.6-5.7-11.5-9-18.7-9s-14.2 3.3-18.7 9l-64 80c-5.8 7.2-6.9 17.1-2.9 25.4s12.4 13.6 21.6 13.6l96 0 32 0 208 0c8.9 0 17.1-4.9 21.2-12.8s3.6-17.4-1.4-24.7l-120-176zM112 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z" />
+                </svg>
                 <span class="sr-only">Loading...</span>
             </div>
         </div>
         }
     </section>
 
-    <section class="mt-4 max-w-screen-xl mx-auto">
+    <section class="mt-1 max-w-screen-xl mx-auto">
         <h2 class="font-bold text-2xl sm:text-3xl text-center mb-4">
             Elige tu producto favorito
         </h2>
 
         <article class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 px-2 sm:px-0">
-            @for (product of visibleProducts | filtro:searchTerm:['name','descripcion']; track $index) {
+            @for (product of visibleFilteredProducts; track $index) {
             <app-home-product [product]="product" [isPriority]="$index === 0" /> }
         </article>
 
-        <div #loadMore class="flex justify-center items-center mt-6" *ngIf="visibleProducts.length < products.length">
+        <!-- Sentinel para el IntersectionObserver -->
+        <div #loadMore class="flex justify-center items-center mt-6" *ngIf="visibleFilteredProducts.length < filterProducts.length">
             <div class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
             <span class="ml-2 text-gray-600 text-sm">Cargando más productos...</span>
         </div>
+
+
     </section>
 
 

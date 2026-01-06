@@ -101,18 +101,19 @@
                         <!-- controles de cantidad -->
                         <div class="flex items-center justify-center gap-3 mt-3">
                             <button (click)="decrement(cartProduct.product.id)" class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 active:scale-95 transition-transform">
-          <svg class="h-3.5 w-3.5 text-gray-800" fill="none" viewBox="0 0 18 2">
-            <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M1 1h16" />
-          </svg>
-        </button>
+                                <svg class="h-3.5 w-3.5 text-gray-800" fill="none" viewBox="0 0 18 2">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M1 1h16" />
+                                </svg>
+                            </button>
 
                             <input type="text" [value]="cartProduct.quantity" readonly class="h-8 w-12 text-center border border-gray-300 rounded-md bg-gray-50 text-gray-900 text-sm" />
 
                             <button (click)="increment(cartProduct.product.id)" class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 active:scale-95 transition-transform">
-          <svg class="h-3.5 w-3.5 text-gray-800" fill="none" viewBox="0 0 18 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M9 1v16M1 9h16" />
-          </svg>
-        </button>
+                                <svg class="h-3.5 w-3.5 text-gray-800" fill="none" viewBox="0 0 18 18">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                                        d="M9 1v16M1 9h16" />
+                                </svg>
+                            </button>
                         </div>
 
                         <!-- total -->
@@ -136,12 +137,39 @@
                 <div class="rounded-lg border border-gray-200 bg-white p-5 shadow-sm">
                     <h3 class="text-xl font-bold text-gray-800 mb-4">Resumen de compra</h3>
 
-                    <div class="flex items-center justify-between border-t border-gray-200 pt-2">
-                        <span class="text-base font-semibold text-gray-700">Total</span>
-                        <span class="text-lg font-bold text-gray-900">
-                            {{ total$ | async | currency:'GTQ':'symbol':'1.2-2':'es-GT' }}
-                        </span>
+                    <div class="border-t border-gray-200 pt-4 space-y-2">
+
+                        <!-- Subtotal -->
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-gray-600">Sub-Total</span>
+                            <span class="text-sm font-semibold text-gray-900">
+                                {{ subtotal$ | async | currency:'GTQ':'symbol':'1.2-2':'es-GT' }}
+                            </span>
+                        </div>
+
+                        <!-- Descuento -->
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-gray-600">
+                                Descuento ({{ porcentajeDescuento$ | async }}%)
+                            </span>
+                            <span class="text-sm font-semibold text-green-700">
+                                - {{ descuento$ | async | currency:'GTQ':'symbol':'1.2-2':'es-GT' }}
+                            </span>
+                        </div>
+
+                        <!-- Total -->
+                        <div class="flex items-center justify-between pt-2 border-t border-dashed border-gray-300">
+                            <span class="text-base font-bold text-gray-900">Total</span>
+                            <span class="text-lg font-bold text-blue-800">
+                                {{ totalFinal$ | async | currency:'GTQ':'symbol':'1.2-2':'es-GT' }}
+                            </span>
+                        </div>
+
                     </div>
+
+
+
+
 
                     <div class="mt-5 flex flex-col sm:flex-row sm:justify-center gap-2 text-center">
                         <a routerLink="/" class="inline-flex justify-center items-center gap-2 text-yellow-500 font-medium underline hover:no-underline">
@@ -171,6 +199,13 @@
                         Comprar
                     </button>
                 </div>
+                <!--
+                <div class="mt-5">
+                    <button (click)="obtenerVenta(7)" class="w-full rounded-lg bg-yellow-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-200">
+                        ComprarPDf
+                    </button>
+                </div>
+                -->
             </div>
         </div>
     </section>

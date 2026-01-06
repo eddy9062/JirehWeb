@@ -7,7 +7,7 @@ import {
   NgOptimizedImage,
 } from '@angular/common';
 
-import { map } from 'rxjs';
+import { combineLatest, map } from 'rxjs';
 import { CartService } from '../core/services/card.service';
 import { CartProductLoadingComponent } from './components/cart-product-loading/cart-product-loading.component';
 import { HomeProductComponent } from '../home/components/home-product/home-product.component';
@@ -18,6 +18,7 @@ import { VentaService } from '../core/services/venta.service';
 import { MovModel } from '../shared/models/MovModel';
 import { DetProductModel } from '../shared/models/DetProductModel';
 import { ModalService } from '../core/services/modal.service';
+import { PdfService } from '../core/services/pdf.service';
 
 @Component({
   selector: 'app-cart',
@@ -49,20 +50,33 @@ export class CartComponent {
     private authService: AuthService,
     private ventaService: VentaService,
     private alertService: AlertService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private pdfService: PdfService
   ) {
     this.isAuthenticated = authService.isAuthenticated();
     //console.log(this.cartProducts$)
   }
 
   // observable del total
-  total$ = this.cartProducts$.pipe(
+  subtotal$ = this.cartProducts$.pipe(
     map((cartProducts) =>
       cartProducts.reduce(
         (sum, cp) => sum + cp.product.precio_venta * cp.quantity,
         0
       )
     )
+  );
+
+  porcentajeDescuento$ = this.subtotal$.pipe(
+    map((subtotal) => (subtotal >= 300 ? 10 : 0))
+  );
+
+  descuento$ = this.subtotal$.pipe(
+    map((subtotal) => (subtotal >= 300 ? subtotal * 0.1 : 0))
+  );
+
+  totalFinal$ = combineLatest([this.subtotal$, this.descuento$]).pipe(
+    map(([subtotal, descuento]) => subtotal - descuento)
   );
 
   //  showErrorToast = false;
@@ -74,7 +88,7 @@ export class CartComponent {
   increment(productId: string) {
     this.cartService.incrementQuantity(productId);
   }
-/*
+  /*
   openLogin() {
     this.showAuthModal = true;
   }*/
@@ -88,22 +102,20 @@ export class CartComponent {
   }
 
   async onComprar() {
-    if (this.isAuthenticated) {
-      //console.log('✅ Usuario autenticado ');
-      //console.log(this._lstData)
-      const movimiento = await this.getMovimientoFromStorage(); // 👈 recibe el objeto
-      if (!movimiento) {
-        console.warn('⚠️ No se pudo construir el movimiento');
-        return;
-      }
-      await this.processItems(movimiento);
-      await this.enviarVenta(this._lstData);
-      //await this.processItems(this.itemCard);
-    } else {
+    if (!this.isAuthenticated) {
       this.alertService.info('debe de iniciar seción o crear usuario...');
-     // this.openLogin()
-     this.modalService.openAuth();
+      this.modalService.openAuth();
+      return;
     }
+
+    const movimiento = await this.getMovimientoFromStorage();
+    if (!movimiento) {
+      console.warn('⚠️ No se pudo construir el movimiento');
+      return;
+    }
+
+    await this.processItems(movimiento);
+    await this.enviarVenta(this._lstData);
   }
 
   async getMovimientoFromStorage(): Promise<MovModel | null> {
@@ -152,16 +164,31 @@ export class CartComponent {
       next: (response) => {
         //console.log(response);
         //console.log(Number(response.codigo));
-        if ((response.message = 'Ok')) {
+        if (response.message === 'Ok') {
           //console.log(response)
           this.cartService.clear();
           this._lstData = [];
           this.alertService.success('# Cotización: ' + response.codigo);
+          // ✅ Generar PDF después de guardar
+          this.obtenerVenta(response.codigo);
         }
       },
       error: (err) => {
         console.log(err.error.message);
       },
+    });
+  }
+  obtenerVenta(pId: number) {
+    this.ventaService.getMovimiento(pId).subscribe({
+      next: (response) => {
+        //console.log('JSON venta:', json);
+        const payload = Array.isArray(response)
+          ? response[0]?.json
+          : response?.json ?? response;
+        // ✅ Aquí SOLO pdfmake
+        this.pdfService.downloadVenta(payload);
+      },
+      error: (err) => console.log(err?.error?.message ?? err),
     });
   }
 }
